@@ -1,2 +1,0 @@
-account name account num account balance contact number  pin
-alexagaedl 127464 9400 928767520 127464
