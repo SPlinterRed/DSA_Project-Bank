@@ -1,4 +1,5 @@
 IDEAS
 Forget passwords/username tab
-change username
-dummy email
+change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)
+store ng data sa usb(username/accnum/pin lang) sa local file lahat ng variables.
+
