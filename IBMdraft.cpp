@@ -2,6 +2,7 @@
     #include <fstream>
     #include <time.h>
     #include <string>
+    #include <Windows.h>
     //#include <filesystem>
     using namespace std;
 
@@ -39,6 +40,7 @@
         users* locateaddress(int accountnum);
         int changepin(int curr);
         int pincreate(int pin);
+        bool filecheck(const string& filename);
         //bool fileExists();
 
     };
@@ -52,6 +54,11 @@
     int main()
     {
         Bank data;
+        while(!data.filecheck("BankAccountsUSB.txt")){
+            cout<<"PLEASE INSERT USB"<<endl;
+            system("pause");
+        };
+        while(data.filecheck("BankAccountsUSB.txt")){
         //if(data.fileExists()){
         data.retrieve();  
             int numero;
@@ -100,8 +107,9 @@
                     break;
                 }//switch case bracket toh
             //}//while 1 braccket
-    }//main bracket
-}
+            }//main bracket
+        }
+    }
 
 
 
@@ -411,6 +419,20 @@
             myFile.close();
         }
     }
+
+    bool Bank::filecheck(const string& filename){
+    DWORD drives = GetLogicalDrives();  // Call GetLogicalDrives only once
+    for (char drive = 'A'; drive <= 'Z'; ++drive) {
+        if (drives & (1 << (drive - 'A'))) {
+            string path = string(1, drive) + ":\\";
+            if (GetFileAttributesA((path + filename).c_str()) != INVALID_FILE_ATTRIBUTES)
+                return true;
+        }
+    }
+    return false;
+    }
+
+
 
     /*bool Bank::fileExists() {
         ifstream file("BankAccounts.txt"); // Try to open the file

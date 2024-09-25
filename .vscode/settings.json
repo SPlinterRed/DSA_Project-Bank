@@ -7,6 +7,7 @@
         "chrono": "cpp",
         "system_error": "cpp",
         "xlocale": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "xlocinfo": "cpp"
     }
 }
