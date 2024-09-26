@@ -2,7 +2,7 @@
     #include <fstream>
     #include <time.h>
     #include <string>
-    #include <Windows.h>
+    #include <windows.h>
     //#include <filesystem>
     using namespace std;
 
