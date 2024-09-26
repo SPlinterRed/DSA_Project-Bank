@@ -2,6 +2,7 @@ IDEAS
 Forget passwords/username tab
 change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)  //MAHIRAP TO (axel)
 store ng data sa usb(username/accnum/pin lang) sa local file lahat ng variables.
+cipher and decipher save and retrieve account details
 
 run program     -->      program gives two options      -->      enroll for a bank account and login
   --Enroll option for an account

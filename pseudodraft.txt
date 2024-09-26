@@ -1,0 +1,19 @@
+Program Run
+Retrieve Local Account File 
+ Insert Card/Card Template
+  Detect if empty or account filled
+   If empty 
+    Enroll Bank Account
+   If account is present
+    Verify if username and password input is correct
+
+When account is logged in
+ Display ATM options
+    withdraw
+    Deposit
+    Display Balance
+    Change Account Details 
+        Pin
+        Contact Num
+        Gmail
+        
