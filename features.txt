@@ -1,5 +1,10 @@
 IDEAS
 Forget passwords/username tab
-change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)
+change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)  //MAHIRAP TO (axel)
 store ng data sa usb(username/accnum/pin lang) sa local file lahat ng variables.
 
+run program     -->      program gives two options      -->      enroll for a bank account and login
+  --Enroll option for an account
+      >List of features (lagay kayo dito basta about lang sa kung paano mag reregister ung user sa bank account)
+  --ATM options
+      >dito ung parang standard features na makikita sa mga atm machines like withdraw and etc.
