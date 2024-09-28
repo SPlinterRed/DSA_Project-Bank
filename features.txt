@@ -4,8 +4,27 @@ change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?
 store ng data sa usb(username/accnum/pin lang) sa local file lahat ng variables.
 cipher and decipher save and retrieve account details
 
-run program     -->      program gives two options      -->      enroll for a bank account and login
+run program retrievelocal(),-->      
+program gives two options
+1.)Online Banking
+              1. regacc();
+                    - Check usb for existing accounts.
+                    - if true. return; if no continue;
+                            - Enroll option for an account
+                                - input name > accountnum(randomized())/(pedeng based) > contact > birthday > pin(6 digit) > initial deposit(min 5000);
+                                - (optional) 2 step verification
+                                > encode(ciphertext)
+                                > save to usb
+              2.) Deposit
+                    - input account number
+                    - if accexist(accountnum)&&accverify(username,pin),if not return acc not exit.
+                          -acclocateaddress(accountnum);
+                            -Amount to deposit(amount);
+           
+2.)
+
   --Enroll option for an account
       >List of features (lagay kayo dito basta about lang sa kung paano mag reregister ung user sa bank account)
+      >
   --ATM options
       >dito ung parang standard features na makikita sa mga atm machines like withdraw and etc.
