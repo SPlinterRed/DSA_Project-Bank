@@ -1,5 +1,66 @@
 IDEAS
 Forget passwords/username tab
-change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)
+change contact/username/bind gmail( 2 step verification/forgot pass email bot)(?)  //MAHIRAP TO (axel)
 store ng data sa usb(username/accnum/pin lang) sa local file lahat ng variables.
+cipher and decipher save and retrieve account details
 
+run program retrievelocal(),-->      
+program gives two options
+1.)Bank Interaction (As if real bank)
+    1. regacc();
+      - Check usb for existing accounts.
+      - if true. return; if no continue;
+      - Enroll option for an account
+      - input name > accountnum(randomized())/(pedeng based) > contact > birthday > pin(6 digit) > initial deposit(min 5000);
+      - (optional) 2 step verification
+      > encode(ciphertext)
+      > save to usb
+              
+    2. Deposit
+      - input account number
+      - if accexist(accountnum)&&accverify(username,pin),if not return acc not exit.
+      -acclocateaddress(accountnum);
+      -Amount to deposit(amount);
+
+ 
+2.) (CHECK USB) ATM machine
+      - If money is below maintaining balance, lock acc. 
+    Login 
+      -Pin Enter
+    1. Display Balance
+    2. Withdraw
+      - How much?
+        - Check if money inside account is sufficient
+          - Display Not sufficient if not, return to main menu.
+    3. Deposit (ATM)
+      - How much?
+      - Another Action?
+    4. Fund Transfer
+      - Input acc ID/No.
+        - Input how much
+        - Confirm while showing partial name of the recepient
+        - Another action? 
+    5. Change Pin 
+      - Input Current Pin
+        - Input new Pin
+        - Confirm New pin
+      - Another Action?
+    6. Exit 
+
+Necessary Functions 
+Class Bank Interaction
+  - regacc()
+  - bankdeposit()
+  - appealtounlock() - for unlocking locked atms (will need to enter amount)
+  
+Class ATM machine
+  - usbcheck() 
+  - lockacc() 
+  - passcheck() - Check if password entered is correct
+  - locate()
+  - verify() - for password verification
+  - moneycheck() - Check if money in acc i sufficient
+  - verifyacc() - Check for fund transfer recepient if it exists
+  - partialblock() - block details of the recipient
+  - changepass() - change the password of the current user
+  - displaybal() 

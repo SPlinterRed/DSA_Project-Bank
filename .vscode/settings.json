@@ -8,6 +8,9 @@
         "system_error": "cpp",
         "xlocale": "cpp",
         "filesystem": "cpp",
-        "xlocinfo": "cpp"
+        "xlocinfo": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp"
     }
 }
