@@ -2,7 +2,6 @@
 #include <string>
 // #include <filesystem>
 #include <windows.h>
-#include "include/atm.h"
 #include "include/bankInteract.h"
 #include "include/fileHandling.h"
 #include "include/myStruct.h"
@@ -40,10 +39,10 @@ int main(){
                     }
                 }
                 break;
-            case 2: 
-                while (menuCheck) {
+            case 2:
+             while (menuCheck) {
                     switch (option.atmMenu()) {
-                        case 1: 
+                        case 1:  
                             //display
                             break;
                         case 2:
@@ -67,7 +66,7 @@ int main(){
                     }
                 }
                 break;
-            case 3: 
+             case 3: 
                 system("cls");
                 cout << "Thanks for using the program, Have a Nice day" << endl << endl;
                 cout << "Press Enter to Continue";
@@ -86,7 +85,7 @@ int menus::startMenu() {
     system("cls");
     cout << "What do you want to do" << endl << endl;
     cout << "1. Interact with the Bank" << endl;
-    cout << "2. Withdraw money from the ATM" << endl;
+    cout << "2. Interact with ATM Machine" << endl;
     cout << "3. Exit Program" << endl << endl;
     cout << ">: "; cin >> option;
 
@@ -115,12 +114,6 @@ int menus::atmMenu() {
     cout << "4. Fund Transfer" << endl;
     cout << "5. Change PIN" << endl;
     cout << "6. Exit" << endl;
-<<<<<<< HEAD
-    cout << ">: "; cin >> option;
-    
-    return option; 
-=======
     cout << ":> "; cin >> option;
     return option;
->>>>>>> 6c973cb31a175b72d11e910acb7a39d898cc5d35
 }

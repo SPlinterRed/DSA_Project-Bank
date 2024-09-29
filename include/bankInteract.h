@@ -12,7 +12,6 @@
 #include <chrono>
 // #include <filesystem>
 #include "myStruct.h"
-#include "atm.h"
 #include "fileHandling.h"
 #include "functionTools.h"
 

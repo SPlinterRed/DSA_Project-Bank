@@ -4,7 +4,6 @@
 #include <iostream>
 #include "myStruct.h"
 #include "fileHandling.h"
-#include "atm.h"
 #include "bankInteract.h"
 #include <random>
 
