@@ -19,13 +19,16 @@ public:
 int main() {
     menus option;
     interact bankInteract;
-    generalTools tools(&bankInteract);
     do {
         switch(option.startMenu()) {
             case 1: 
                 while(true){
                     switch(option.bankMenu()) {
-                        case 1: bankInteract.regAcc();
+                        case 1: 
+                            bankInteract.regAcc();
+    
+                            break;
+                            
                     }
                 }
             case 2: 
