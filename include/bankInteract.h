@@ -294,13 +294,14 @@ void interact::fundTransfer() {
         recipientNode->balance += recipientAmount;
 
         cout << "Fund Transfer Complete" <<endl;
-        cout << "Current balance for " << currentNode->accountName<< "is: " << currentNode->balance<<endl;
-        cout << "Current balance for " << recipientNode->accountName<< "is: " << recipientNode->balance<<endl;
+        cout << "Current balance for " << currentNode->accountName<< " is: " << currentNode->balance<<endl;
+        cout << "Current balance for " << recipientNode->accountName<< " is: " << recipientNode->balance<<endl;
         cout << "Press Enter to Return to Main Menu" << endl;
         getch();
     } 
     else {
-        cout << "Cancelling Fund Transfer" <<endl;
+        cout << "Fund Transfer Cancelled" <<endl;
+        cout << "Press Enter to Return to Main Menu" << endl;
         getch();
     }
 }
