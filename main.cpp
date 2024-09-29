@@ -115,7 +115,12 @@ int menus::atmMenu() {
     cout << "4. Fund Transfer" << endl;
     cout << "5. Change PIN" << endl;
     cout << "6. Exit" << endl;
+<<<<<<< HEAD
     cout << ">: "; cin >> option;
     
     return option; 
+=======
+    cout << ":> "; cin >> option;
+    return option;
+>>>>>>> 6c973cb31a175b72d11e910acb7a39d898cc5d35
 }
