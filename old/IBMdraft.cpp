@@ -1,4 +1,3 @@
-<<<<<<< HEAD
     #include <iostream>
     #include <fstream>
     #include <time.h>
@@ -6,16 +5,6 @@
     #include <windows.h>
     //#include <filesystem>
     using namespace std;
-=======
-        #include <iostream>
-        #include <fstream>
-        #include <time.h>
-        #include <string>
-        #include <conio.h>
-        #include <Windows.h>
-        #include "Bank.h" //Bank Class Header
-        using namespace std;
->>>>>>> f84311bba1072c0092e394e09c623a358cf94be7
 
         Bank::Bank() : head(NULL) {}
 
