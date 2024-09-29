@@ -4,8 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "F:/msys64/mingw32/include",
-                "F:/msys64/mingw64/include"
+                "F:/msys64/ucrt64/include",
+                "${workspaceFolder}/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -16,7 +16,7 @@
             "compilerPath": "F:/msys64/ucrt64/bin/g++.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
