@@ -11,7 +11,7 @@ public:
     void locate();
     void lock();
     void del();
-    void 
-}
+    void verify();
+};
 
 #endif
