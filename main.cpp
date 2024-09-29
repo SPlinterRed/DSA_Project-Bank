@@ -43,19 +43,19 @@ int main(){
              while (menuCheck) {
                     switch (option.atmMenu()) {
                         case 1:  
-                            //display
+                            bankInteract.display();
                             break;
                         case 2:
-                            //Withdraw
+                            bankInteract.withdraw();
                             break;
                         case 3:
-                            //Deposit
+                            bankInteract.deposit();
                             break;
                         case 4:
-                            //Fund Transfer
+                            bankInteract.fundTransfer();
                             break;
                         case 5:
-                            //Change PIN
+                            bankInteract.changePin();
                             break;
                         case 6:
                             menuCheck = false;
