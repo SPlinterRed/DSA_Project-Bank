@@ -11,6 +11,7 @@
         "xlocinfo": "cpp",
         "iosfwd": "cpp",
         "fstream": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "unordered_set": "cpp"
     }
 }

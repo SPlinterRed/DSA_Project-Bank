@@ -11,14 +11,15 @@
 #include <sstream>
 #include <unordered_set>
 
+class interact;
+
 using namespace std;
 
 class generalTools{
 private:
-    interact bank;
-    accountNode* current;
+    interact* bank;
 public:
-    generalTools() : current(bank.getHead()) {}
+    generalTools(interact* bankInstance) : bank(bankInstance) {}
     void locate();
     void lock();
     void del();
@@ -40,7 +41,14 @@ string generalTools :: randAccNum() {
 }
 
 bool generalTools::uniqueAccountNumber(const string& accountNumber) {
-    
+    accountNode* currentNode = bank->getHead();
+    while (currentNode != nullptr) {
+        if (currentNode->accountNumber == accountNumber) {
+            return false;
+        }
+        currentNode = currentNode->next;
+    }
+    return true;
 }
 
 #endif
