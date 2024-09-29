@@ -24,6 +24,7 @@ int main() {
             case 2:
             case 3:
             default: 
+                cout << "No such options"; break;
         }
     } while(true);
     

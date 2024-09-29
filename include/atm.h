@@ -2,5 +2,16 @@
 #define ATM_H
 
 #include "myStruct.h"
+#include "fileHandling.h"
+#include "bankInteract.h"
+#include "functionTools.h"
+#include <iostream>
+
+using namespace std;
+
+class atmFunctions {
+public:
+    void withdraw();
+};
 
 #endif
