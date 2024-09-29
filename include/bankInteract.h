@@ -9,4 +9,12 @@
 #include "atm.h"
 #include "fileHandling.h"
 
+class interact {
+private:
+    accountNode* head;
+public:
+    void regAcc();
+    void deposit();
+};
+
 #endif

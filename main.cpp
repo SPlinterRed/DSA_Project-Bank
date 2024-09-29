@@ -20,9 +20,10 @@ int main() {
     menus option;
     do {
         switch(option.startMenu()) {
-            case 1:
+            case 1: 
             case 2:
             case 3:
+            default: 
         }
     } while(true);
     
