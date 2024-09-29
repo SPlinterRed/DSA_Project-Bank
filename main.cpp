@@ -84,5 +84,6 @@ int menus::atmMenu() {
     cout << "4. Fund Transfer" << endl;
     cout << "5. Change PIN" << endl;
     cout << "6. Exit" << endl;
+    cout << ":> "; cin >> option;
     return option;
 }
