@@ -11,26 +11,33 @@ using namespace std;
 
 class menus {
 public:
-    void startMenu();
+    int startMenu();
     void bankMenu();
     void atmMenu();
 };
 
 int main() {
     menus option;
-    option.startMenu();
+    do {
+        switch(option.startMenu()) {
+            case 1:
+            case 2:
+            case 3:
+        }
+    } while(true);
+    
 }
 
-void menus::startMenu() {
+int menus::startMenu() {
     int  option;
-    do {
-        system("cls");
-        cout << "What do you want to do" << endl << endl;
-        cout << "1. Interact with the Bank" << endl;
-        cout << "2. Withdraw money from the ATM" << endl;
-        cout << "3. Exit Program" << endl << endl;
-        cout << ">: "; cin >> option;
-    } while (option != 3);
+    system("cls");
+    cout << "What do you want to do" << endl << endl;
+    cout << "1. Interact with the Bank" << endl;
+    cout << "2. Withdraw money from the ATM" << endl;
+    cout << "3. Exit Program" << endl << endl;
+    cout << ">: "; cin >> option;
+
+    return option;
 }
 
 void menus::bankMenu() {
