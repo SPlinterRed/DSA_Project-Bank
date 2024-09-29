@@ -13,7 +13,7 @@ class menus {
 public:
     int startMenu();
     int bankMenu();
-    void atmMenu();
+    int atmMenu();
 };
 
 int main(){
@@ -74,6 +74,15 @@ int menus::bankMenu() {
     return option;
 }
 
-void menus::atmMenu() {
-
+int menus::atmMenu() {
+    int option;
+    system("cls");
+    cout << "What do you want to do" << endl << endl;
+    cout << "1. Display Balance" << endl;
+    cout << "2. Withdraw" << endl;
+    cout << "3. Deposit" << endl;
+    cout << "4. Fund Transfer" << endl;
+    cout << "5. Change PIN" << endl;
+    cout << "6. Exit" << endl;
+    return option;
 }
