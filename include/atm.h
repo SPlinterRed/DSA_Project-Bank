@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class atmFunctions {
+class atmFunctions : public interact {
 public:
     void withdraw();
 };

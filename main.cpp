@@ -19,6 +19,7 @@ public:
 int main(){
     menus option;
     interact bankInteract;
+    bool mainMenuCheck = true;
     do {
         bool menuCheck = true;
         switch(option.startMenu()) {
@@ -40,13 +41,43 @@ int main(){
                 }
                 break;
             case 2: 
+                while (menuCheck) {
+                    switch (option.atmMenu()) {
+                        case 1: 
+                            //display
+                            break;
+                        case 2:
+                            //Withdraw
+                            break;
+                        case 3:
+                            //Deposit
+                            break;
+                        case 4:
+                            //Fund Transfer
+                            break;
+                        case 5:
+                            //Change PIN
+                            break;
+                        case 6:
+                            menuCheck = false;
+                            break;
+                        default: 
+                            cout << "No such options"; 
+                            break;
+                    }
+                }
                 break;
             case 3: 
+                system("cls");
+                cout << "Thanks for using the program, Have a Nice day" << endl << endl;
+                cout << "Press Enter to Continue";
+                mainMenuCheck = false;
+                getch();
                 break;
             default: 
                 cout << "No such options"; break;
         }
-    } while(true);
+    } while(mainMenuCheck);
     return 0;
 }
 
@@ -84,5 +115,7 @@ int menus::atmMenu() {
     cout << "4. Fund Transfer" << endl;
     cout << "5. Change PIN" << endl;
     cout << "6. Exit" << endl;
-    return option;
+    cout << ">: "; cin >> option;
+    
+    return option; 
 }
