@@ -79,7 +79,8 @@ bool interact::uniqueAccountNumber(const string& accountNumber) {
     return true;
 }
 
-void interact::creationDetails(accountNode* account) {
+void interact::creationDetails(accountNode* account){
+    system("cls");
     if (account != nullptr) {
         cout << "Account Details:" << endl;
         cout << "----------------------------" << endl;
@@ -95,4 +96,35 @@ void interact::creationDetails(accountNode* account) {
         cout << "Error: Account information is invalid.\n";
     }
 }
+
+void interact::deposit() {
+    string accountIdentifier;
+    cout << "Enter your Account Name or Number: "; cin.ignore(); getline(cin, accountIdentifier);
+
+    accountNode* currentNode = head;
+    while (currentNode != nullptr) {
+        if (currentNode->accountNumber == accountIdentifier || currentNode->accountName == accountIdentifier) {
+            double amount;
+            cout << "Enter amount to deposit: ";
+            cin >> amount;
+
+            if (amount <= 0) {
+                cout << "Invalid amount. Please enter a positive value." << endl;
+                return;
+            }
+
+            // Update the balance
+            currentNode->balance += amount;
+            cout << "Successfully deposited " << amount << " into account " << currentNode->accountNumber << endl;
+            cout << "New balance: " << currentNode->balance << endl << endl;
+            cout << "Press Enter to continue" << endl;
+            getch();
+            return;
+        }
+        currentNode = currentNode->next;
+    }
+    cout << "Account not found. Please check the account name or number." << endl;
+    system("pause");
+}
+
 #endif

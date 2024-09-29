@@ -16,21 +16,29 @@ public:
     void atmMenu();
 };
 
-int main() {
+int main(){
     menus option;
     interact bankInteract;
     do {
+        bool menuCheck = true;
         switch(option.startMenu()) {
             case 1: 
-                while(true){
+                while(menuCheck){
                     switch(option.bankMenu()) {
                         case 1: 
                             bankInteract.regAcc();
-    
                             break;
-                            
+                        case 2:
+                            bankInteract.deposit();
+                            break;
+                        case 3:
+                            menuCheck = false;
+                            break;
+                        default: 
+                            cout << "No such options"; break;
                     }
                 }
+                break;
             case 2: 
                 break;
             case 3: 
