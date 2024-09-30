@@ -30,7 +30,7 @@ public:
     Bank();
     void regacc(); // Register new users
     void AddAcc(details x);
-    int transaction(details x);
+    int transaction(details* x);
     void deactivate(long accountnumber);
     void retrieve();
     void save();

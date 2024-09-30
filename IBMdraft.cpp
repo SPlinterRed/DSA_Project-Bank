@@ -16,9 +16,8 @@
             //USB SCANNER
                 data.retrieve();  
                 int pin;char respo;
-                details locator = data.retrieveusb();
-                int numero = locator.accountnum;
-                cout<<"CARD DETECTED"<<endl;
+                details* locator = data->retrieveusb();
+                int numero = locator->pin;
                 int opera = data.menu();
                 system("cls");
                 switch(opera){
@@ -26,10 +25,10 @@
                         if(data.accverify(numero))
                         {
                             cout<<"Input your 4 DIGIT PIN: ";cin>>pin;
-                                if(pin == locator.pin){
+                                if(pin == numero){
                                     cout<<"Logged in"<<endl;
                                     system("pause");
-                                    data.transaction(locator);
+                                    data.transaction(data.>etrieveusb());
                                     break;
                                 }else{cout<<"Wrong PIN!"<<endl;system("pause");break;}
                         }else{
@@ -122,13 +121,13 @@
             cin>>usbrespo;
             switch(usbrespo){
                 case 1:
-                 if (isFlashDriveInserted()) {
+                    while(!isFlashDriveInserted()){ 
+                        cout<< "No flash drive detected, Please insert Flash Drive!" << endl;
+                    Sleep(1000);
+                    }
+                    if(isFlashDriveInserted()){
                     cout << "Flash drive is inserted." << endl;
                     Sleep(1000);saveusb(x);break;
-                    } else {
-                        system("cls");
-                    cout << "No flash drive detected, Please insert Flash Drive!" << endl;
-                    Sleep(1000);
                     }
                 
                 case 2:
@@ -188,13 +187,13 @@
         }
 
 
-        int Bank::transaction(details x){
+        int Bank::transaction(details* x){
             int withdraw;int deposit;int accuser;int transfer;char pin;int newpin;users* TargetTransfer;int ope;users* useracc;
             while(bool lock = true){   
         
             cout<<"1.) Balance Inquiry\n";
             cout<<"2.) Withdraw\n";
-            cout<<"3.) Deposit\n";
+            cout<<"3.) Dep  osit\n";
             cout<<"4.) Fund Transfer\n";
             cout<<"5.) Change PIN Code\n";
             cout<<"6.) Other Transactions\n";
@@ -206,40 +205,40 @@
             switch(ope)
                 {
                     case 1: 
-                        cout<<" USERNAME: "<<x.name<<"\n";
-                        cout<<" ACCOUNT NUMBER: "<<x.accountnum<<"\n\n";
-                        cout<<" ACCOUNT REMAINING BALANCE: "<<x.balance<<"\n";
+                        cout<<" USERNAME: "<<x->name<<"\n";
+                        cout<<" ACCOUNT NUMBER: "<<x->accountnum<<"\n\n";
+                        cout<<" ACCOUNT REMAINING BALANCE: "<<x->balance<<"\n";
                         system("pause");break;
                     case 2:
-                        cout<<" USERNAME: "<<x.name<<"\n";
-                        cout<<" ACCOUNT NUMBER: "<<x.accountnum<<"\n\n";
-                        cout<<" ACCOUNT REMAINING BALANCE: "<<x.balance<<"\n";
+                        cout<<" USERNAME: "<<x->name<<"\n";
+                        cout<<" ACCOUNT NUMBER: "<<x->accountnum<<"\n\n";
+                        cout<<" ACCOUNT REMAINING BALANCE: "<<x->balance<<"\n";
                         cout<<" INPUT AMOUNT TO WITHDRAW: ";
                         cin>>withdraw;
-                        if(withdraw > x.balance){
+                        if(withdraw > x->balance){
                         cout << "INSUFFICIENT FUNDS!" << endl;
                         }else{
-                        x.balance -= withdraw;
-                        cout << "WITHDRAWAL SUCCESFUL, NEW BALANCE: " << x.balance << endl;
+                        x->balance -= withdraw;
+                        cout << "WITHDRAWAL SUCCESFUL, NEW BALANCE: " << x->balance << endl;
                         }system("pause");break;
                     case 3: 
-                        cout<<" USERNAME: "<<x.name<<"\n";
-                        cout<<" ACCOUNT NUMBER: "<<x.accountnum<<"\n\n";
-                        cout<<" INPUT AMOUNT TO DEPOSIT: "<<x.balance<<"\n";
+                        cout<<" USERNAME: "<<x->name<<"\n";
+                        cout<<" ACCOUNT NUMBER: "<<x->accountnum<<"\n\n";
+                        cout<<" INPUT AMOUNT TO DEPOSIT: "<<x->balance<<"\n";
                         cin>>deposit;
-                        x.balance += deposit;
-                        cout << "DEPOSIT SUCCEFUL, NEW BALANCE: " << x.balance << endl;
+                        x->balance += deposit;
+                        cout << "DEPOSIT SUCCEFUL, NEW BALANCE: " << x->balance << endl;
                         system("pause");break;
                     case 4:
-                        cout<<" USERNAME: "<<x.name<<"\n";
-                        cout<<" ACCOUNT NUMBER: "<<x.accountnum<<"\n\n";
+                        cout<<" USERNAME: "<<x->name<<"\n";
+                        cout<<" ACCOUNT NUMBER: "<<x->accountnum<<"\n\n";
                         cout<<" TRANSFER TO ACCOUNT(ACCOUNT NUMBER): ";
                         cin>>accuser;
                         cout<<" HOW MUCH AMOUNT TO TRANSFER: ";
                         cin>>transfer;
                         if(accverify(accuser)){
                         TargetTransfer=locateaddress(accuser);
-                        x.balance-=transfer;                                                
+                        x->balance-=transfer;                                                
                         ftransfer(TargetTransfer,transfer);
                         cout<<"Successfully Transfered Funds"<<endl;
                         }
@@ -249,14 +248,14 @@
         
                         system("pause");break;
                     case 5:
-                        cout<<" USERNAME: "<<x.name<<"\n";
-                        cout<<" ACCOUNT NUMBER: "<<x.accountnum<<"\n\n";
-                        cout<<" CURRENT PIN: \n"<<x.pin<<"\n"<<endl;
+                        cout<<" USERNAME: "<<x->name<<"\n";
+                        cout<<" ACCOUNT NUMBER: "<<x->accountnum<<"\n\n";
+                        cout<<" CURRENT PIN: \n"<<x->pin<<"\n"<<endl;
                         cout<<" CHANGE PIN?(y/n): ";
                         cin>>pin;
                         if(pin == 'y'||pin =='Y'){
-                            newpin = changepin(x.pin);
-                            x.pin = newpin;
+                            newpin = changepin(x->pin);
+                            x->pin = newpin;
                             cout<<"PIN SUCCESSFULLY CHANGED"<<endl;
                         }system("pause");break;
                     /*case 6:
@@ -266,12 +265,12 @@
                         system("pause");break;
                         */
                     case 7:
-                        useracc = locateaddress(x.accountnum);
-                        useracc->accounts.accountnum = x.accountnum;
-                        useracc->accounts.name = x.name;
-                        useracc->accounts.balance = x.balance;
-                        useracc->accounts.contact = x.contact;
-                        useracc->accounts.pin = x.pin;
+                        useracc = locateaddress(x->accountnum);
+                        useracc->accounts.accountnum = x->accountnum;
+                        useracc->accounts.name = x->name;
+                        useracc->accounts.balance = x->balance;
+                        useracc->accounts.contact = x->contact;
+                        useracc->accounts.pin = x->pin;
                         cout<<"Logging out\n"<<endl;
                         system("pause");
                         save();
