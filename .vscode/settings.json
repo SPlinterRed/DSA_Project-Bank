@@ -1,16 +1,7 @@
 {
     "files.associations": {
-        "xstring": "cpp",
-        "ctime": "cpp",
-        "iostream": "cpp",
         "ostream": "cpp",
-        "chrono": "cpp",
-        "system_error": "cpp",
-        "xlocale": "cpp",
-        "filesystem": "cpp",
-        "xlocinfo": "cpp",
-        "iosfwd": "cpp",
-        "fstream": "cpp",
-        "istream": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp"
     }
 }
