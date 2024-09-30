@@ -1,4 +1,1 @@
-account name account num account balance contact number  pin
-alex 106712 9000 9287670529 9999
-alexx 106989 7000 9287670529 9999
-alexgaledo 107636 100000 9287670529 9999
+
