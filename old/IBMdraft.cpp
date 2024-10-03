@@ -472,7 +472,7 @@
             myFile.close();
         }
     }
-    bool Bank::isFlashDriveInserted() {
+    bool interact::isFlashDriveInserted() {
         DWORD drives = GetLogicalDrives();
         
         for (char drive = 'A'; drive <= 'Z'; ++drive) {

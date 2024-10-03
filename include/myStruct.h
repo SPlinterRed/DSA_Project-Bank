@@ -10,8 +10,12 @@ struct accountNode {
     string accountNumber;
     long double balance;
     string accountPin;
-    accountNode* next;
-    accountNode(string name, string number, long double balance, string pin) : accountName(name), accountNumber(number), balance(balance), accountPin(pin), next(nullptr) {}
+};
+
+struct user{
+    accountNode data;
+    user* next;
+    user(accountNode x):data(x),next(NULL){}
 };
 
 #endif
