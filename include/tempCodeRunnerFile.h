@@ -35,13 +35,19 @@ public:
     void withdraw();
     void changePin();
     void fundTransfer();
+    bool isFlashDriveInserted();
+    bool accverify(string accountnum);
     void saveLocal();
     void retrievelocal();
-    bool isFlashDriveInserted();
-    bool scandrive();
-    void saveToUSB();
-    bool retrieveFromUSB();
-    bool accverify(string accountnum);
+    bool checkusb();
+    void saveUSB(accountNode x);
+    string pincheck(string accountnum);
+
+    
+    //bool scandrive();
+    //void saveToUSB();
+    //bool retrieveFromUSB();
+    
     //bool retrieveAccountNumbersFromUSB();
 };
 
@@ -80,6 +86,7 @@ void interact::regAcc() {
         x.balance = 5000;
         x.accountPin = pin;
         x.accountNumber = accountNumber;
+        saveUSB(x);
         AddAcc(x);
         cout<<" ACCOUNT SUCCESSFULLY CREATED"<<endl;
         system("pause");
@@ -339,7 +346,7 @@ void interact::fundTransfer() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------
-bool interact::isFlashDriveInserted(){
+ bool interact::isFlashDriveInserted(){
         DWORD drives = GetLogicalDrives();
         
         for (char drive = 'A'; drive <= 'Z'; ++drive) {
@@ -394,113 +401,83 @@ bool interact::isFlashDriveInserted(){
     }
 
 bool interact::accverify(string accountnum){
+    
     user* x = head;
+    string numpin;
     while(x!=NULL){
         if(x->data.accountNumber == accountnum){
-            return true;
+            cout<<"PLEASE INPUT PIN: ";cin>>numpin;
+            while(x->data.accountPin!=numpin){
+                system("cls");
+                cout<<"Incorrect Pin, please input correct pin: ";cin>>numpin;
+                
+            }
+            if(x->data.accountPin==numpin){
+                return true;
+            }
         }
             x = x->next;
     }   
     return false;
 }
 
-void interact::saveToUSB() {
-    // Check for removable drives
-    DWORD drives = GetLogicalDrives();
-    string removableDrivePath;
+bool interact::checkusb(){
+    accountNode p;
+    string absolutepath = "D:/BankAccountsUSB.txt";
+        ifstream myFile(absolutepath);
+      
+        string header;
+        getline(myFile, header);
 
-    // Find the first removable drive
-    for (char drive = 'A'; drive <= 'Z'; ++drive) {
-        if (drives & (1 << (drive - 'A'))) { // Check if drive exists
-            string drivePath = string(1, drive) + ":\\"; // Build drive path
-            UINT driveType = GetDriveTypeA(drivePath.c_str());
+        while (myFile >> p.accountName >> p.accountNumber >> p.balance >> p.accountPin) {
+        cout << "Debug: Checking account " << p.accountNumber << endl;  // Debug line
 
-            if (driveType == DRIVE_REMOVABLE) { // Check if the drive is removable
-                removableDrivePath = drivePath + "BankAccountsUSB.txt"; // Construct the file path
-                cout << "Removable drive detected at " << drivePath << endl;
-                break; // Found a removable drive, exit the loop
-            }
+        if (accverify(p.accountNumber)) {
+            cout << "Debug: Account found in local list." << endl;
+            getch();  // Optional
+            myFile.close();
+            return true;  // Account match found
         }
-    }
+        }
+        cout<<"account not found\n";
+        getch();
+        myFile.close();
+        return false;
+        myFile.close();
+}
 
-    // Check if the removable drive path was constructed successfully
-    if (removableDrivePath.empty()) {
-        cout << "No removable drive found. Data not saved." << endl;
-        return; // No removable drive was found
-    }
+void interact::saveUSB(accountNode p){
+    string absolutepath = "D:/BankAccountsUSB.txt";
+    ofstream myFile(absolutepath);  // Use ofstream for writing
 
-    // Open the file for writing
-    ofstream myFile(removableDrivePath);
     if (!myFile) {
-        cout << "File Error: Unable to open " << removableDrivePath << endl;
-        return; // Return if file cannot be opened
-    }
-
-    // Write account data to the file
-    user* p = head;
-    myFile << "AccountName AccountNumber Balance Pin" << endl; // Optional header
-    while (p != NULL) {
-        myFile << p->data.accountName << " "
-               << p->data.accountNumber << " "
-               << p->data.balance << " "
-               << p->data.accountPin << endl;
-        p = p->next;
+        cout << "File Error" << endl;
+        return;
     }
     
-    myFile.close(); // Close the file
-    cout << "Data saved successfully to " << removableDrivePath << endl; // Confirmation message
+    // Write header to file
+    myFile << "AccountName AccountNumber Balance Pin" << endl;  
+    
+    // Write each user's data to file
+   
+        myFile << p.accountName << " " << p.accountNumber << " " 
+               << p.balance << " " << p.accountPin << endl;
+    myFile.close();  // Close the file
+    cout << "Data saved to USB successfully!" << endl;
+}
+
+string interact::pincheck(string accnum){
+    user* x = head;
+    while(x!=NULL){
+        if(x->data.accountNumber == accnum){
+            return accnum;
+        }
+            x = x->next;
+    }   
+    return NULL;
 }
 
 
-bool interact::retrieveFromUSB(){
-    // Check for removable drives
-    DWORD drives = GetLogicalDrives();
-    string removableDrivePath;
-
-    for (char drive = 'A'; drive <= 'Z'; ++drive) {
-        if (drives & (1 << (drive - 'A'))) { // Check if drive exists
-            string drivePath = string(1, drive) + ":\\"; // Build drive path
-            UINT driveType = GetDriveTypeA(drivePath.c_str());
-
-            if (driveType == DRIVE_REMOVABLE) { // Check if the drive is removable
-                removableDrivePath = drivePath + "BankAccountsUSB.txt"; // Construct the file path
-                cout << "Removable drive detected at " << drivePath << endl;
-                break; // Found a removable drive, exit the loop
-            }
-        }
-    }
-
-    // Check if the removable drive path was constructed successfully
-    if (removableDrivePath.empty()) {
-        cout << "No removable drive found." << endl;
-        return false; // No removable drive was found
-    }
-
-    // Open the file from the removable drive
-    accountNode p;
-    ifstream myFile(removableDrivePath);
-    if (!myFile) {
-        cout << "File Error: Unable to open " << removableDrivePath << endl;
-        return false; // Return false if file cannot be opened
-    }
-
-    string header;
-    getline(myFile, header); // Read the header
-
-    // Read account data from the file
-    while (myFile >> p.accountName >> p.accountNumber >> p.balance >> p.accountPin) {
-        // Add each account node to the linked list
-        if (accverify(p.accountNumber)) {
-            myFile.close();
-            return true;
-        }
-    }
-
-    myFile.close(); // Close the file
-    cout << "No matching Bank Accounts Found" << endl;
-    system("pause");
-    return false;
-}
 //--------------------------------------------------------------------
 
 

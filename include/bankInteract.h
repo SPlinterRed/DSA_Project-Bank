@@ -22,6 +22,7 @@ using namespace std;
 class interact {
 private:
     user *head;
+    user *usbacc;
 public:
     interact():head(NULL){};
     user* getHead() { return head; }
@@ -35,12 +36,13 @@ public:
     void withdraw();
     void changePin();
     void fundTransfer();
-    
-    //bool scandrive();
-    //void saveToUSB();
-    //bool retrieveFromUSB();
-    
-    //bool retrieveAccountNumbersFromUSB();
+    bool isFlashDriveInserted();
+    bool accverify(string accountnum);
+    void saveLocal();
+    void retrievelocal();
+    bool checkusb();
+    void saveUSB();
+
 };
 
 /*void interact::debugdisplay(){
@@ -61,6 +63,7 @@ public:
 
 void interact::regAcc() {
     accountNode x;
+    usbacc->data = x; 
         string newname;
         string pin,accountNumber;
         cout<<"INPUT YOUR NAME: "<<endl;
@@ -78,6 +81,7 @@ void interact::regAcc() {
         x.balance = 5000;
         x.accountPin = pin;
         x.accountNumber = accountNumber;
+        saveUSB();
         AddAcc(x);
         cout<<" ACCOUNT SUCCESSFULLY CREATED"<<endl;
         system("pause");
@@ -126,53 +130,40 @@ void interact::creationDetails(user* account){
         cout << "Name: " << account->data.accountName << endl;
         cout << "Account Number: " << account->data.accountNumber << endl;
         cout << "Balance: Php " << account->data.balance << endl;
-        cout << "PIN: " << account->data.accountPin << endl;  // You might not want to display the PIN for security reasons
+        cout << "PIN: " << account->data.accountPin << endl;
         cout << "----------------------------" << endl << endl;
         cout << "Press enter to continue"; 
         getch();
     }
 
 void interact::deposit() {
-    string accountIdentifier, accountIdentifierPin;
     system("cls");
-    cout << "Enter your Account Name or Number: "; cin.ignore(); getline(cin, accountIdentifier);
-    cout << endl << "Enter your Account Pin: "; getline(cin, accountIdentifierPin);
-    user *currentNode = head;
-    while (currentNode != nullptr) {
-        if ((currentNode->data.accountNumber == accountIdentifier || currentNode->data.accountName == accountIdentifier) && (currentNode->data.accountPin == accountIdentifierPin)) {
+    user *currentNode = usbacc;
+    
             double amount;
             cout << "Enter amount to deposit: ";
             cin >> amount;
 
-            if (amount <= 0) {
+    if (amount <= 0) {
                 cout << "Invalid amount. Please enter a positive value." << endl;
                 getch();
                 return;
-            }
+    }
 
-            // Update the balance
             currentNode->data.balance += amount;
             cout << "Successfully deposited " << amount << " into account " << currentNode->data.accountNumber << endl;
             cout << "New balance: " << currentNode->data.balance << endl << endl;
             cout << "Press Enter to continue" << endl;
             getch();
             return;
-        }
-        currentNode = currentNode->next;
-    }
-    cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
+    
     system("pause");
 }
 
 void interact::withdraw() {
-    string accountIdentifier, accountIdentifierPin;
     system("cls");
-    cout << "Enter your Account Name or Number: "; cin.ignore(); getline(cin, accountIdentifier);
-    cout << endl << "Enter your Account Pin: "; getline(cin, accountIdentifierPin);
 
-    user *currentNode = head;
-    while (currentNode != nullptr) {
-        if ((currentNode->data.accountNumber == accountIdentifier || currentNode->data.accountName == accountIdentifier) && currentNode->data.accountPin == accountIdentifierPin) {
+    user *currentNode = usbacc;
             cout << "Maintaining Balance for IBM ATM: 500"<<endl<<endl;
             double amount; 
             cout << "Enter amount to withdraw: "; 
@@ -183,49 +174,39 @@ void interact::withdraw() {
                 getch();
                 return;
             }
-
             currentNode->data.balance -= amount;
             cout << "Successfully Withdrawn " << amount << " from account " << currentNode->data.accountNumber << endl;
             cout << "New balance: " << currentNode->data.balance << endl << endl;
             cout << "Press Enter to continue" << endl;
             getch();
             return;
-        }
-        currentNode = currentNode->next;
+        system("pause");
     }
-    cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
-    system("pause");
-}
 
 void interact::display() {
-    string accountIdentifier, accountIdentifierPin;
     system("cls");
 
 
-    user *currentNode = head;
+    user *currentNode = usbacc;
     while (currentNode != nullptr) {
-        if ((currentNode->data.accountNumber == accountIdentifier || currentNode->data.accountName == accountIdentifier) && currentNode->data.accountPin == accountIdentifierPin) {
+       
             cout << "Account Name: " << currentNode->data.accountName << endl;
             cout << "Account Number: " << currentNode->data.accountNumber << endl;
             cout << "Account Balance: " << currentNode->data.balance <<endl <<endl;
             cout << "Press Enter to Return to Main Menu" <<endl;
             getch();
             return;
-        }
-        currentNode = currentNode->next;
     }
     cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
     system("pause");
 }
 
 void interact::changePin() {
-    string accountIdentifier, currPin, newPin, newPinConfirm;
+    string currPin,newPin,newPinConfirm;
     system("cls");
-    cout << "Enter your Account Name or Number: "; cin.ignore(); getline(cin, accountIdentifier);
 
-    user *currentNode = head;
-    while (currentNode != nullptr) {
-        if (currentNode->data.accountNumber == accountIdentifier || currentNode->data.accountName == accountIdentifier) {
+    user *currentNode = usbacc;
+   
             cout << "Account Name: " << currentNode->data.accountName << endl<<endl;
 
             cout << "Enter Current Pin: ";
@@ -252,40 +233,21 @@ void interact::changePin() {
                 cout << "Entered Pin does not match User Pin."<<endl;
                 getch();
                 return;
-            }
+
         }
-        currentNode = currentNode->next;
-    }
-    cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
     system("pause");
 }
 
 void interact::fundTransfer() {
-    string accountIdentifier, accountIdentifierPin, accountIdentifierRecipient;
+    string accountIdentifierRecipient;
     char action;
     double recipientAmount;
 
     system("cls");
-    cout << "Enter your Account Name or Number: "; cin.ignore(); getline(cin, accountIdentifier);
-    cout << endl << "Enter your Account Pin: "; getline(cin, accountIdentifierPin);
 
-    user *currentNode, *recipientNode;
-    currentNode = head;
-    recipientNode = head;
-    while (currentNode != nullptr) {
-        if ((currentNode->data.accountNumber == accountIdentifier || currentNode->data.accountName == accountIdentifier) && currentNode->data.accountPin == accountIdentifierPin) {
-            break;
-        }
-        currentNode = currentNode->next;
-    }
-
-    if (currentNode == nullptr) {
-        cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
-        getch();
-    }
+    user *currentNode = usbacc, *recipientNode = head;
 
     system("cls");
-    cout << "Welcome " << currentNode->data.accountName << endl<<endl;
     cout << "Enter Recipient Name or Account Number: "; getline(cin, accountIdentifierRecipient);
 
     while (recipientNode != nullptr) {
@@ -337,6 +299,122 @@ void interact::fundTransfer() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------
+ bool interact::isFlashDriveInserted(){
+        DWORD drives = GetLogicalDrives();
+        
+        for (char drive = 'A'; drive <= 'Z'; ++drive) {
+            if (drives & (1 << (drive - 'A'))) { // Check if drive exists
+                string drivePath = string(1, drive) + ":\\";
+                UINT driveType = GetDriveTypeA(drivePath.c_str());
+                
+                if (driveType == DRIVE_REMOVABLE) { // Check if the drive is removable
+                    cout << "Removable drive detected at " << drivePath << endl;
+                    return true;
+                }
+            }
+        }
+        
+        // No removable drives found
+        return false;
+    }
+
+    void interact::saveLocal(){
+    ofstream myFile("BankAccounts.txt");
+    if(!myFile){
+        cout <<"File Error"<< endl;
+        return;
+    }
+    user* p = head;
+    myFile <<"AccountName AccountNumber Balance Pin"<< endl;
+    while(p != NULL){
+        myFile<<p->data.accountName<<" "<<p->data.accountNumber<<" "<<p->data.balance<<" "<<p->data.accountPin<<endl;
+        p = p->next;
+    }
+    myFile.close();
+    cout<<"Data saved T_T"<< endl;
+}
+
+    void interact::retrievelocal(){
+        accountNode p;
+        ifstream myFile("BankAccounts.txt");
+        if (!myFile){
+            cout<<"File Error.\n";
+            return;
+        }
+        string header;
+        getline(myFile, header);
+
+        while(myFile>>p.accountName>>p.accountNumber>>p.balance>>p.accountPin) {
+        //cout <<"Read account " << p.accountName << ", " << p.accountNumber << ", " << p.balance << ", " << p.accountPin << endl; // Debugging line
+            AddAcc(p);
+        }
+        
+        myFile.close();
+        cout<<"Data retrieved successfully!"<< endl;
+    }
+
+bool interact::accverify(string accountnum){
+    
+    user* x = head;
+    string numpin;
+    while(x!=NULL){
+        if(x->data.accountNumber == accountnum){
+            cout<<"PLEASE INPUT PIN: ";cin>>numpin;
+            while(x->data.accountPin!=numpin){
+                system("cls");
+                cout<<"Incorrect Pin, please input correct pin: ";cin>>numpin;
+                
+            }
+            if(x->data.accountPin==numpin){
+                return true;
+            }
+        }
+            x = x->next;
+    }   
+    return false;
+}
+
+bool interact::checkusb(){
+    accountNode p;
+    string absolutepath = "D:/BankAccountsUSB.txt";
+        ifstream myFile(absolutepath);
+      
+        string header;
+        getline(myFile, header);
+
+        while (myFile >> p.accountName >> p.accountNumber >> p.balance >> p.accountPin) {
+        cout << "Debug: Checking account " << p.accountNumber << endl;  // Debug line
+
+        if (accverify(p.accountNumber)) {
+            cout << "Welcome to IBM "<<p.accountName<<"!"<<endl;
+            usbacc->data = p;
+            getch();
+            myFile.close();
+            return true;
+        }
+        }
+        cout<<"account not found\n";
+        getch();
+        myFile.close();
+        return false;
+}
+
+void interact::saveUSB(){
+    user* acc2save2usb = usbacc;
+    string absolutepath = "D:/BankAccountsUSB.txt";
+    ofstream myFile(absolutepath);
+
+    if (!myFile){
+        cout << "File Error" << endl;
+        return;
+    }
+    myFile<<"AccountName AccountNumber Balance Pin"<< endl;  
+    myFile<< acc2save2usb->data.accountName << " " << acc2save2usb->data.accountNumber << " " << acc2save2usb->data.balance << " " << acc2save2usb->data.accountPin << endl;
+    myFile.close();
+    cout << "Data saved to USB successfully!" << endl;
+}
+
+
 
 
 //--------------------------------------------------------------------

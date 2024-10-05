@@ -10,18 +10,12 @@
 #include <fstream>
 
 using namespace std;
-
+#endif
+/*
 interact bank;
-class filehandle{
-    public: 
-    bool isFlashDriveInserted();
-    bool accverify(string accountnum);
-    void saveLocal();
-    void retrievelocal();
-    bool isFlashDriveInserted();
-};
 
-    bool filehandle::isFlashDriveInserted(){
+
+    bool interact::isFlashDriveInserted(){
         DWORD drives = GetLogicalDrives();
         
         for (char drive = 'A'; drive <= 'Z'; ++drive) {
@@ -40,7 +34,7 @@ class filehandle{
         return false;
     }
 
-    void filehandle::saveLocal(){
+    void interact::saveLocal(){
     ofstream myFile("BankAccounts.txt");
     if(!myFile){
         cout <<"File Error"<< endl;
@@ -56,7 +50,7 @@ class filehandle{
     cout<<"Data saved T_T"<< endl;
 }
 
-    void filehandle::retrievelocal(){
+    void interact::retrievelocal(){
         accountNode p;
         ifstream myFile("BankAccounts.txt");
         if (!myFile){
@@ -75,7 +69,7 @@ class filehandle{
         cout<<"Data retrieved successfully!"<< endl;
     }
 
-bool filehandle::accverify(string accountnum){
+bool interact::accverify(string accountnum){
     user* x = bank.head;
     while(x!=NULL){
         if(x->data.accountNumber == accountnum){
@@ -85,9 +79,8 @@ bool filehandle::accverify(string accountnum){
     }   
     return false;
 }
+*/
 
 
-
-#endif
 
 

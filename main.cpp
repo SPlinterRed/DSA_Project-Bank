@@ -3,7 +3,6 @@
     // #include <filesystem>
     #include <windows.h>
     #include "include/bankInteract.h"
-    #include "include/fileHandling.h"
     #include "include/myStruct.h"
 
 
@@ -20,8 +19,7 @@
     int main(){
         menus option;
         interact bankInteract;
-        filehandle filemanip;
-        filemanip.retrievelocal();
+        bankInteract.retrievelocal();
         //bankInteract.debugdisplay();
         system("pause");
         bool mainMenuCheck = true;
@@ -38,13 +36,14 @@
                                 bankInteract.deposit();
                                 break;
                             case 3:
-                                filemanip.saveLocal();
+                                bankInteract.saveLocal();
                                 menuCheck = false;
                                 break;
                             default: 
                                 cout << "No such options"; break;
                         }
-                    }
+                        }
+                    
                     break;
                 case 2:
                 do{
@@ -57,9 +56,10 @@
                 Sleep(300);
                 cout<<".";
                 Sleep(300);
-                } while (!filemanip.isFlashDriveInserted());
-                if(filemanip.isFlashDriveInserted()){
+                } while (!bankInteract.isFlashDriveInserted());
+                if(bankInteract.checkusb()){
                                 while (menuCheck) {
+                                    bankInteract.saveUSB();
                                 switch (option.atmMenu()) {
                                     case 1:  
                                         bankInteract.display();
@@ -77,19 +77,16 @@
                                         bankInteract.changePin();
                                         break;
                                     case 6:
-                                        filemanip.saveLocal();
+                                        bankInteract.saveLocal();
+                                        bankInteract.saveUSB();
                                         menuCheck = false;
                                         break;
                                     default: 
                                         cout << "No such options"; 
                                         break;
                                 }
-                            }
-                    break;
-                    }else{
-                    cout<<"NO ACCOUNTS FOUND IN THE USB"<<endl;
-                    getch();
-                    }
+                            } 
+                        }
                 case 3: 
                     system("cls");
                     cout << "Thanks for using the program, Have a Nice day" << endl << endl;
@@ -101,10 +98,11 @@
                     cout << "No such options"; break;
             }
         }while(mainMenuCheck);
-        
         return 0;
     }
-
+    
+    
+    
 
     int menus::startMenu() {
         int  option;
@@ -139,7 +137,7 @@
         cout << "3. Deposit" << endl;
         cout << "4. Fund Transfer" << endl;
         cout << "5. Change PIN" << endl;
-        cout << "6. Exit" << endl;
+        cout << "6. Exit and Save" << endl;
         cout << ":> "; cin >> option;
         return option;
     }
