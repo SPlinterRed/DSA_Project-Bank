@@ -10,10 +10,8 @@
 #include <iomanip>
 #include <sstream>
 #include <chrono>
-// #include <filesystem>
 #include "myStruct.h"
-#include "fileHandling.h"
-#include "functionTools.h"
+#include <random>
 
 using namespace std;
 
@@ -42,7 +40,6 @@ public:
     void retrievelocal();
     bool checkusb();
     void saveUSB();
-
 };
 
 /*void interact::debugdisplay(){
