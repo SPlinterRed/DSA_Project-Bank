@@ -10,10 +10,8 @@
 #include <iomanip>
 #include <sstream>
 #include <chrono>
-// #include <filesystem>
 #include "myStruct.h"
-#include "fileHandling.h"
-#include "functionTools.h"
+#include <random>
 
 using namespace std;
 
@@ -42,7 +40,6 @@ public:
     void retrievelocal();
     bool checkusb();
     void saveUSB();
-
 };
 
 /*void interact::debugdisplay(){
@@ -64,42 +61,43 @@ public:
 void interact::regAcc() {
     accountNode x;
     usbacc->data = x; 
-        string newname;
-        string pin,accountNumber;
-        cout<<"INPUT YOUR NAME: "<<endl;
-        cin>>newname;
-       do {
+    string newname;
+    string pin,accountNumber;
+    cout<<"INPUT YOUR NAME: "<<endl;
+    cin>>newname;
+    do {
         cout << "Enter your pin code (it must be exactly 4 or 6 digits): "; cin >> pin;
         if (pin.length() != 4 && pin.length() != 6) {
             cout << "Invalid PIN! Please enter exactly 4 or 6 digits." << endl;
         }
     } while (pin.length() != 4 && pin.length() != 6);
-       do {
+    
+    do {
         accountNumber = randAccNum(); 
     } while (!uniqueAccountNumber(accountNumber));
-        x.accountName = newname;
-        x.balance = 5000;
-        x.accountPin = pin;
-        x.accountNumber = accountNumber;
-        saveUSB();
-        AddAcc(x);
-        cout<<" ACCOUNT SUCCESSFULLY CREATED"<<endl;
-        system("pause");
+
+    x.accountName = newname;
+    x.balance = 5000;
+    x.accountPin = pin;
+    x.accountNumber = accountNumber;
+    saveUSB();
+    AddAcc(x);
+    cout<<" ACCOUNT SUCCESSFULLY CREATED"<<endl;
+    system("pause");
 }
 
-    void interact::AddAcc(accountNode x) {    
-        user *newNode = new user(x);
-        if(head == NULL) {
+void interact::AddAcc(accountNode x) {    
+    user *newNode = new user(x);
+    if(head == NULL) {
             head = newNode;
-        }else{
-            user *p = head;
-            while (p->next != NULL) {
-                p=p->next;
-            }
-            p->next=newNode;
+    } else {
+        user *p = head;
+        while (p->next != NULL) {
+            p=p->next;
         }
-      
-    }
+        p->next=newNode;
+    } 
+}
 
 string interact::randAccNum() {
     static mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
@@ -133,29 +131,29 @@ void interact::creationDetails(user* account){
         cout << "PIN: " << account->data.accountPin << endl;
         cout << "----------------------------" << endl << endl;
         cout << "Press enter to continue"; 
-        getch();
+        _getch();
     }
 
 void interact::deposit() {
     system("cls");
     user *currentNode = usbacc;
     
-            double amount;
-            cout << "Enter amount to deposit: ";
-            cin >> amount;
+    double amount;
+    cout << "Enter amount to deposit: ";
+    cin >> amount;
 
     if (amount <= 0) {
-                cout << "Invalid amount. Please enter a positive value." << endl;
-                getch();
-                return;
+        cout << "Invalid amount. Please enter a positive value." << endl;
+        _getch();
+        return;
     }
 
-            currentNode->data.balance += amount;
-            cout << "Successfully deposited " << amount << " into account " << currentNode->data.accountNumber << endl;
-            cout << "New balance: " << currentNode->data.balance << endl << endl;
-            cout << "Press Enter to continue" << endl;
-            getch();
-            return;
+    currentNode->data.balance += amount;
+    cout << "Successfully deposited " << amount << " into account " << currentNode->data.accountNumber << endl;
+    cout << "New balance: " << currentNode->data.balance << endl << endl;
+    cout << "Press Enter to continue" << endl;
+    _getch();
+    return;
     
     system("pause");
 }
@@ -164,24 +162,24 @@ void interact::withdraw() {
     system("cls");
 
     user *currentNode = usbacc;
-            cout << "Maintaining Balance for IBM ATM: 500"<<endl<<endl;
-            double amount; 
-            cout << "Enter amount to withdraw: "; 
-            cin >> amount;
+    cout << "Maintaining Balance for IBM ATM: 500"<<endl<<endl;
+    double amount; 
+    cout << "Enter amount to withdraw: "; 
+    cin >> amount;
 
-            if (amount > currentNode->data.balance) {
-                cout << "Balance in account is insufficient" <<endl;
-                getch();
-                return;
-            }
-            currentNode->data.balance -= amount;
-            cout << "Successfully Withdrawn " << amount << " from account " << currentNode->data.accountNumber << endl;
-            cout << "New balance: " << currentNode->data.balance << endl << endl;
-            cout << "Press Enter to continue" << endl;
-            getch();
-            return;
-        system("pause");
+    if (amount > currentNode->data.balance) {
+        cout << "Balance in account is insufficient" <<endl;
+        _getch();
+        return;
     }
+    currentNode->data.balance -= amount;
+    cout << "Successfully Withdrawn " << amount << " from account " << currentNode->data.accountNumber << endl;
+    cout << "New balance: " << currentNode->data.balance << endl << endl;
+    cout << "Press Enter to continue" << endl;
+    _getch();
+    return;
+    system("pause");
+}
 
 void interact::display() {
     system("cls");
@@ -194,7 +192,7 @@ void interact::display() {
             cout << "Account Number: " << currentNode->data.accountNumber << endl;
             cout << "Account Balance: " << currentNode->data.balance <<endl <<endl;
             cout << "Press Enter to Return to Main Menu" <<endl;
-            getch();
+            _getch();
             return;
     }
     cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
@@ -207,34 +205,33 @@ void interact::changePin() {
 
     user *currentNode = usbacc;
    
-            cout << "Account Name: " << currentNode->data.accountName << endl<<endl;
+    cout << "Account Name: " << currentNode->data.accountName << endl<<endl;
 
-            cout << "Enter Current Pin: ";
-            cin >> currPin;
+    cout << "Enter Current Pin: ";
+    cin >> currPin;
 
-            if (currPin == currentNode->data.accountPin) {
-                cout << "Enter New Pin: ";
-                cin >> newPin;
+    if (currPin == currentNode->data.accountPin) {
+        cout << "Enter New Pin: ";
+        cin >> newPin;
 
-                cout << "Confirm New Pin: ";
-                cin >> newPinConfirm; 
-                if (newPin == newPinConfirm) {
-                    currentNode->data.accountPin = newPin;
-                    cout << "Pin is now changed." <<endl;
-                    getch();
-                }
-                else {
-                    cout << "New Pins entered does not match each other" <<endl; 
-                    getch();
-                    return;
-                }
-            }
-            else {
-                cout << "Entered Pin does not match User Pin."<<endl;
-                getch();
-                return;
-
+        cout << "Confirm New Pin: ";
+        cin >> newPinConfirm; 
+        if (newPin == newPinConfirm) {
+            currentNode->data.accountPin = newPin;
+            cout << "Pin is now changed." <<endl;
+            _getch();
         }
+        
+        else {
+            out << "New Pins entered does not match each other" <<endl; 
+            _getch();
+            return;
+        }
+    } else {
+        cout << "Entered Pin does not match User Pin."<<endl;
+        _getch();
+        return;
+    }
     system("pause");
 }
 
@@ -259,7 +256,7 @@ void interact::fundTransfer() {
 
     if (recipientNode == nullptr) {
         cout << "Account not found or Incorrect Password. Please check the account name or number." << endl;
-        getch();
+        _getch();
         return;
     }
 
@@ -268,13 +265,13 @@ void interact::fundTransfer() {
 
     if (recipientAmount < 0) {
         cout << "Invalid amount. Please enter a positive value." << endl;
-        getch();
+        _getch();
         return;
     }
 
     if (recipientAmount > currentNode->data.balance) {
         cout << "Insufficient balance. Transaction failed." << endl;
-        getch();
+        _getch();
         return;
     }
 
@@ -289,36 +286,32 @@ void interact::fundTransfer() {
         cout << "Current balance for " << currentNode->data.accountName<< " is: " << currentNode->data.balance<<endl;
         cout << "Current balance for " << recipientNode->data.accountName<< " is: " << recipientNode->data.balance<<endl;
         cout << "Press Enter to Return to Main Menu" << endl;
-        getch();
+        _getch();
     } 
     else {
         cout << "Fund Transfer Cancelled" <<endl;
         cout << "Press Enter to Return to Main Menu" << endl;
-        getch();
+        _getch();
     }
 }
 
-//-----------------------------------------------------------------------------------------------------------------
- bool interact::isFlashDriveInserted(){
-        DWORD drives = GetLogicalDrives();
-        
-        for (char drive = 'A'; drive <= 'Z'; ++drive) {
-            if (drives & (1 << (drive - 'A'))) { // Check if drive exists
-                string drivePath = string(1, drive) + ":\\";
-                UINT driveType = GetDriveTypeA(drivePath.c_str());
-                
-                if (driveType == DRIVE_REMOVABLE) { // Check if the drive is removable
-                    cout << "Removable drive detected at " << drivePath << endl;
-                    return true;
-                }
+bool interact::isFlashDriveInserted(){
+    DWORD drives = GetLogicalDrives();
+    for (char drive = 'A'; drive <= 'Z'; ++drive) {
+        if (drives & (1 << (drive - 'A'))) { // Check if drive exists
+            string drivePath = string(1, drive) + ":\\";
+            UINT driveType = GetDriveTypeA(drivePath.c_str());
+            if (driveType == DRIVE_REMOVABLE) { // Check if the drive is removable
+                cout << "Removable drive detected at " << drivePath << endl;
+                return true;
             }
         }
-        
-        // No removable drives found
-        return false;
     }
+    // No removable drives found
+    return false;
+}
 
-    void interact::saveLocal(){
+void interact::saveLocal(){
     ofstream myFile("BankAccounts.txt");
     if(!myFile){
         cout <<"File Error"<< endl;
@@ -334,24 +327,23 @@ void interact::fundTransfer() {
     cout<<"Data saved T_T"<< endl;
 }
 
-    void interact::retrievelocal(){
-        accountNode p;
-        ifstream myFile("BankAccounts.txt");
-        if (!myFile){
-            cout<<"File Error.\n";
-            return;
-        }
-        string header;
-        getline(myFile, header);
-
-        while(myFile>>p.accountName>>p.accountNumber>>p.balance>>p.accountPin) {
-        //cout <<"Read account " << p.accountName << ", " << p.accountNumber << ", " << p.balance << ", " << p.accountPin << endl; // Debugging line
-            AddAcc(p);
-        }
-        
-        myFile.close();
-        cout<<"Data retrieved successfully!"<< endl;
+void interact::retrievelocal(){
+    accountNode p;
+    ifstream myFile("BankAccounts.txt");
+    if (!myFile){
+        cout<<"File Error.\n";
+        return;
     }
+    string header;
+    getline(myFile, header);
+    while(myFile>>p.accountName>>p.accountNumber>>p.balance>>p.accountPin) {
+    //cout <<"Read account " << p.accountName << ", " << p.accountNumber << ", " << p.balance << ", " << p.accountPin << endl; // Debugging line
+        AddAcc(p);
+    }
+        
+    myFile.close();
+    cout<<"Data retrieved successfully!"<< endl;
+}
 
 bool interact::accverify(string accountnum){
     
@@ -388,13 +380,13 @@ bool interact::checkusb(){
         if (accverify(p.accountNumber)) {
             cout << "Welcome to IBM "<<p.accountName<<"!"<<endl;
             usbacc->data = p;
-            getch();
+            _getch();
             myFile.close();
             return true;
         }
         }
         cout<<"account not found\n";
-        getch();
+        _getch();
         myFile.close();
         return false;
 }
@@ -413,11 +405,5 @@ void interact::saveUSB(){
     myFile.close();
     cout << "Data saved to USB successfully!" << endl;
 }
-
-
-
-
-//--------------------------------------------------------------------
-
 
 #endif
