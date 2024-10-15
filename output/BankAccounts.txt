@@ -1,4 +1,12 @@
-AccountName AccountNumber Balance Pin
-Axel 10946 5000 1231
-Tado 15945 5000 1231
-Borat 19763 5000 123142
+Name: Axel Aaron
+AccountNumber: 21680
+Balance: 5000
+accountPin: 1231
+Birthday: 07      / 29      / 2004
+----------------------------------------
+Name: Bogart Anthon
+AccountNumber: 06693
+Balance: 5000
+accountPin: 1231
+Birthday: 05 / 20 / 2005
+----------------------------------------

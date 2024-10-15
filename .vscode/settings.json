@@ -4,6 +4,8 @@
         "iostream": "cpp",
         "*.tcc": "cpp",
         "xstring": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "string": "cpp",
+        "string_view": "cpp"
     }
 }

@@ -25,11 +25,14 @@ int main(){
             case 1: 
                 while(menuCheck){
                     switch(option.bankMenu()) {
-                        case 1: 
+                        case 1:
+                            bankInteract.flashDriveChecker();
                             bankInteract.regAcc();
+                            bankInteract.saveLocal();
                             break;
                         case 2:
-                            bankInteract.deposit();
+                            bankInteract.depositLocal();
+                            bankInteract.saveLocal();
                             break;
                         case 3:
                             bankInteract.saveLocal();
@@ -41,46 +44,45 @@ int main(){
                 }
                 break;
             case 2:
-                do{
+                do {
                     system("cls");
-                    cout<<"please insert USB / FLASHDRIVE";
-                    Sleep(300);
-                    cout<<".";
-                    Sleep(300);
-                    cout<<".";
-                    Sleep(300);
-                    cout<<".";
-                    Sleep(300);
-                } while (!bankInteract.checkusb());
-                
+                    cout << "Please insert USB / FLASHDRIVE";
+                    for (int i = 0; i < 3; ++i) {
+                        Sleep(300);
+                        cout << ".";
+                    }
+                } while (!bankInteract.checkFlashDrive());
                 while (menuCheck) {
-                    bankInteract.saveUSB();
                     switch (option.atmMenu()) {
                         case 1:  
                             bankInteract.display();
                             break;
                         case 2:
                             bankInteract.withdraw();
+                            bankInteract.updateOriginalList();
                             break;
                         case 3:
                             bankInteract.deposit();
+                            bankInteract.updateOriginalList();
                             break;
                         case 4:
                             bankInteract.fundTransfer();
+                            bankInteract.updateOriginalList();
                             break;
                         case 5:
                             bankInteract.changePin();
+                            bankInteract.updateOriginalList();
                             break;
                         case 6:
                             bankInteract.saveLocal();
-                            bankInteract.saveUSB();
                             menuCheck = false;
                             break;
                         default: 
                             cout << "No such options"; 
                             break;
                     }
-                } 
+                }
+                break; 
             case 3: 
                 system("cls");
                 cout << "Thanks for using the program, Have a Nice day" << endl << endl;

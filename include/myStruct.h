@@ -10,6 +10,9 @@ struct accountNode {
     string accountNumber;
     long double balance;
     string accountPin;
+    string yearOfBirth;
+    string dayofBirth;
+    string monthofBirth;
 };
 
 struct user{
