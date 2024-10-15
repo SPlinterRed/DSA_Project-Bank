@@ -1,9 +1,10 @@
 #include <iostream>
-// #include <filesystem>
-#include <windows.h>
+#include <string>
 #include "include/bankInteract.h"
+#include "include/myStruct.h"
 
 using namespace std;
+
 class menus {
 public:
     int startMenu();
@@ -38,7 +39,6 @@ int main(){
                             cout << "No such options"; break;
                     }
                 }
-                    
                 break;
             case 2:
                 do{
@@ -51,51 +51,52 @@ int main(){
                     Sleep(300);
                     cout<<".";
                     Sleep(300);
-                } while (!bankInteract.isFlashDriveInserted());
-                if(bankInteract.checkusb()){
-                                while (menuCheck) {
-                                    bankInteract.saveUSB();
-                                switch (option.atmMenu()) {
-                                    case 1:  
-                                        bankInteract.display();
-                                        break;
-                                    case 2:
-                                        bankInteract.withdraw();
-                                        break;
-                                    case 3:
-                                        bankInteract.deposit();
-                                        break;
-                                    case 4:
-                                        bankInteract.fundTransfer();
-                                        break;
-                                    case 5:
-                                        bankInteract.changePin();
-                                        break;
-                                    case 6:
-                                        bankInteract.saveLocal();
-                                        bankInteract.saveUSB();
-                                        menuCheck = false;
-                                        break;
-                                    default: 
-                                        cout << "No such options"; 
-                                        break;
-                                }
-                            } 
-                        }
-                case 3: 
-                    system("cls");
-                    cout << "Thanks for using the program, Have a Nice day" << endl << endl;
-                    cout << "Press Enter to Continue";
-                    mainMenuCheck = false;
-                    getch();
-                    break;
-                default: 
-                    cout << "No such options"; break;
+                } while (!bankInteract.checkusb());
+                
+                while (menuCheck) {
+                    bankInteract.saveUSB();
+                    switch (option.atmMenu()) {
+                        case 1:  
+                            bankInteract.display();
+                            break;
+                        case 2:
+                            bankInteract.withdraw();
+                            break;
+                        case 3:
+                            bankInteract.deposit();
+                            break;
+                        case 4:
+                            bankInteract.fundTransfer();
+                            break;
+                        case 5:
+                            bankInteract.changePin();
+                            break;
+                        case 6:
+                            bankInteract.saveLocal();
+                            bankInteract.saveUSB();
+                            menuCheck = false;
+                            break;
+                        default: 
+                            cout << "No such options"; 
+                            break;
+                    }
+                } 
+            case 3: 
+                system("cls");
+                cout << "Thanks for using the program, Have a Nice day" << endl << endl;
+                cout << "Press Enter to Continue";
+                mainMenuCheck = false;
+                getch();
+                break;
+            default: 
+                cout << "No such options"; break;
         }
     }while(mainMenuCheck);
     return 0;
 }
     
+    
+
 int menus::startMenu() {
     int  option;
     system("cls");
@@ -115,6 +116,7 @@ int menus::bankMenu() {
     cout << "2. Deposit Money" << endl;
     cout << "3. Return back to the main menu" << endl << endl;
     cout << ">: "; cin >> option;
+
     return option;
 }
 
