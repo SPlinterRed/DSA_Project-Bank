@@ -58,7 +58,7 @@ public:
 void interact::regAcc() {
     accountNode x;
     string newname;
-    string pin,accountNumber;
+    string pin,accountNumber, contactnum;
     string year, date, month;
     long yearInt, monthInt, dateInt;
     cout<<"INPUT YOUR NAME: "; cin.ignore(); getline(cin, newname);
@@ -76,13 +76,17 @@ void interact::regAcc() {
     do {
         cout << "Enter your year of Birth: "; cin >> year;
         yearInt = stol(year);
-        cout << yearInt; 
+        if (yearInt <= 0 || yearInt >= 2025) {
+            cout << "Enter a year with the current era."<<endl;
+        }
     } while (yearInt <= 0 || yearInt >= 2025);
 
     do {
         cout << "Enter Month of Birth (in number format Ex. January = 1): "; cin >> month;
         monthInt = stol(month);
-        cout << monthInt;
+        if (monthInt <= 0 || monthInt >= 13) {
+            cout << "Enter a valid month (1-12)."<<endl;
+        }
     } while (monthInt <= 0 || monthInt >= 13);
 
     switch(monthInt) {
@@ -96,12 +100,18 @@ void interact::regAcc() {
             do {
                 cout << "Enter day of Birth(1-31): "; cin >> date;
                 dateInt = stol(date);
-            } while (dateInt <= 0 || dateInt >= 32 );
+                if (dateInt <= 0 || dateInt >= 32) {
+                    cout << "Month entered only has 1-31 days."<<endl;
+                }
+            } while (dateInt <= 0 || dateInt >= 32);
             break;
         case 2:
             do {
                 cout << "Enter day of Birth(1-29): "; cin >> date;
                 dateInt = stol(date);
+                if (dateInt <= 0 || dateInt >= 32) {
+                    cout << "Month entered only has 1-28/29 days."<<endl;
+                }
             } while (dateInt <= 0 || dateInt >= 30);
             break;
         case 4:
@@ -111,10 +121,20 @@ void interact::regAcc() {
             do {
                 cout << "Enter day of Birth(1-30): "; cin >> date;
                 dateInt = stoi(date);
+                if (dateInt <= 0 || dateInt >= 32) {
+                    cout << "Month entered only has 1-30 days."<<endl;
+                }
             } while (dateInt <= 0 || dateInt >= 31);
             break;
     }
-    
+
+    do {
+        cout << "Enter your Contact Number(11 Digits): "; cin >> contactnum;
+        if (contactnum.length() != 11) {
+            cout << "Invalid Contact Number! Enter 11 Digits." << endl;
+       }
+    } while (contactnum.length() != 11);
+
     x.accountName = newname;
     x.balance = 5000;
     x.accountPin = pin;
@@ -122,6 +142,7 @@ void interact::regAcc() {
     x.dayofBirth = date;
     x.monthofBirth = month;
     x.yearOfBirth = year;
+    x.contactNumber = contactnum;
 
     AddAcc(x);
     creationDetails(x);
@@ -171,6 +192,7 @@ void interact::creationDetails(accountNode x){
     cout << "Name: " << x.accountName << endl;
     cout << "Account Number: " << x.accountNumber << endl;
     cout << "Birthday: " << x.monthofBirth << " / " << x.dayofBirth << " / " << x.yearOfBirth << endl;
+    cout << "Contact Number: " << x.contactNumber << endl;
     cout << "Balance: Php " << x.balance << endl;
     cout << "PIN: " << x.accountPin << endl;
     cout << "----------------------------" << endl << endl;
@@ -395,6 +417,7 @@ void interact::saveLocal() {
                << "Birthday: " << p->data.monthofBirth << " / "
                << p->data.dayofBirth << " / "
                << p->data.yearOfBirth << endl
+               << "Contact Number: " << p->data.contactNumber << endl 
                << "----------------------------------------" << endl;
 
         p = p->next;
@@ -436,6 +459,8 @@ void interact::retrievelocal() {
                 p.dayofBirth = birthday.substr(firstSlash + 2, secondSlash - firstSlash - 2);
                 p.yearOfBirth = birthday.substr(secondSlash + 2);
             }
+        } else if (line.find("ContactNumber: ") == 0) {
+            p.contactNumber = line.substr(10);
         }
 
         if (line == "----------------------------------------") {

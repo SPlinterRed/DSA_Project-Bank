@@ -13,6 +13,7 @@ struct accountNode {
     string yearOfBirth;
     string dayofBirth;
     string monthofBirth;
+    string contactNumber;
 };
 
 struct user{
