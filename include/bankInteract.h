@@ -60,6 +60,7 @@ void interact::regAcc() {
     string newname;
     string pin,accountNumber;
     string year, date, month;
+    long yearInt, monthInt, dateInt;
     cout<<"INPUT YOUR NAME: "; cin.ignore(); getline(cin, newname);
     do {
         cout << "Enter your pin code (it must be exactly 4 or 6 digits): "; cin >> pin;
@@ -72,9 +73,47 @@ void interact::regAcc() {
         accountNumber = randAccNum(); 
     } while (!uniqueAccountNumber(accountNumber));
 
-    cout << "Enter your year of Birth: "; cin >> year;
-    cout << "Enter day of Birth: "; cin >> date;
-    cout << "Enter Month of Birth (in number format Ex. January = 01): "; cin >> month;
+    do {
+        cout << "Enter your year of Birth: "; cin >> year;
+        yearInt = stol(year);
+        cout << yearInt; 
+    } while (yearInt <= 0 || yearInt >= 2025);
+
+    do {
+        cout << "Enter Month of Birth (in number format Ex. January = 1): "; cin >> month;
+        monthInt = stol(month);
+        cout << monthInt;
+    } while (monthInt <= 0 || monthInt >= 13);
+
+    switch(monthInt) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            do {
+                cout << "Enter day of Birth(1-31): "; cin >> date;
+                dateInt = stol(date);
+            } while (dateInt <= 0 || dateInt >= 32 );
+            break;
+        case 2:
+            do {
+                cout << "Enter day of Birth(1-29): "; cin >> date;
+                dateInt = stol(date);
+            } while (dateInt <= 0 || dateInt >= 30);
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            do {
+                cout << "Enter day of Birth(1-30): "; cin >> date;
+                dateInt = stoi(date);
+            } while (dateInt <= 0 || dateInt >= 31);
+            break;
+    }
     
     x.accountName = newname;
     x.balance = 5000;
@@ -131,6 +170,7 @@ void interact::creationDetails(accountNode x){
     cout << "----------------------------" << endl;
     cout << "Name: " << x.accountName << endl;
     cout << "Account Number: " << x.accountNumber << endl;
+    cout << "Birthday: " << x.monthofBirth << " / " << x.dayofBirth << " / " << x.yearOfBirth << endl;
     cout << "Balance: Php " << x.balance << endl;
     cout << "PIN: " << x.accountPin << endl;
     cout << "----------------------------" << endl << endl;
