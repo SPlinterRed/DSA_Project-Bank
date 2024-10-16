@@ -39,6 +39,9 @@ public:
     void saveUSB(const accountNode& account);
     bool flashDriveChecker();
     void updateOriginalList();
+    string getpincode();
+    string encrypt(string pin);
+    string decrypt(string pin);
 };
 
 /*void interact::debugdisplay(){
@@ -63,7 +66,8 @@ void interact::regAcc() {
     long yearInt, monthInt, dateInt;
     cout<<"INPUT YOUR NAME: "; cin.ignore(); getline(cin, newname);
     do {
-        cout << "Enter your pin code (it must be exactly 4 or 6 digits): "; cin >> pin;
+        pin = getpincode();
+        cout << endl;
         if (pin.length() != 4 && pin.length() != 6) {
             cout << "Invalid PIN! Please enter exactly 4 or 6 digits." << endl;
        }
@@ -187,6 +191,7 @@ bool interact::uniqueAccountNumber(const string& accountNumber) {
 
 void interact::creationDetails(accountNode x){
     system("cls");
+    string encryptpass = encrypt(x.accountPin);
     cout << "Account Details:" << endl;
     cout << "----------------------------" << endl;
     cout << "Name: " << x.accountName << endl;
@@ -194,7 +199,7 @@ void interact::creationDetails(accountNode x){
     cout << "Birthday: " << x.monthofBirth << " / " << x.dayofBirth << " / " << x.yearOfBirth << endl;
     cout << "Contact Number: " << x.contactNumber << endl;
     cout << "Balance: Php " << x.balance << endl;
-    cout << "PIN: " << x.accountPin << endl;
+    cout << "PIN: " << encryptpass << endl;
     cout << "----------------------------" << endl << endl;
     cout << "Press enter to continue"; 
     getch();
@@ -410,10 +415,11 @@ void interact::saveLocal() {
 
     user* p = head;
     while (p != NULL) {
+        string encryptpass = encrypt(p->data.accountPin);
         myFile << "Name: " << p->data.accountName << endl
                << "AccountNumber: " << p->data.accountNumber << endl
                << "Balance: " << p->data.balance << endl
-               << "accountPin: " << p->data.accountPin << endl
+               << "accountPin: " << encryptpass << endl
                << "Birthday: " << p->data.monthofBirth << " / "
                << p->data.dayofBirth << " / "
                << p->data.yearOfBirth << endl
@@ -449,6 +455,7 @@ void interact::retrievelocal() {
             p.balance = stod(line.substr(9));
         } else if (line.find("accountPin: ") == 0) {
             p.accountPin = line.substr(12);
+            p.accountPin = decrypt(p.accountPin);
         } else if (line.find("Birthday: ") == 0) {
             string birthday = line.substr(10);
             size_t firstSlash = birthday.find('/');
@@ -608,5 +615,42 @@ void interact::updateOriginalList() {
     cout << "Account not found in the original list." << endl;
 }
 
+string interact::getpincode() {
+    string pin;
+    char ch;
+
+    cout << "Enter Pin: ";
+    while ((ch = getch()) != '\r') {
+        if (ch >= '0' && ch <= '9') {
+            pin += ch;
+            cout << "*";
+        }
+        else if (ch == '\b') {
+            if (!pin.empty()) {
+                cout << "\b \b";
+                pin.pop_back();
+            }
+        }
+    }
+    return pin;
+}
+
+string interact::encrypt(string pin) {
+    int i, j;
+    j = pin.size();
+    for (i = 0; i < j; i++) {
+        pin[i] = pin[i] + 100;
+    }
+    return pin;
+}
+
+string interact::decrypt(string pin) {
+    int i, j;
+    j = pin.size();
+    for (i = 0; i<j; i++) {
+        pin[i] = pin[i] - 100;
+    }
+    return pin;
+}
 
 #endif

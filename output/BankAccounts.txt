@@ -1,7 +1,7 @@
 Name: Anthon
-AccountNumber: 06839
+AccountNumber: 22004
 Balance: 5000
-accountPin: 1212
-Birthday: 12 / 31 / 2024
-Contact Number: 12345678911
+accountPin: •–•–
+Birthday: 12 / 12 / 12
+Contact Number: 12121212121
 ----------------------------------------
