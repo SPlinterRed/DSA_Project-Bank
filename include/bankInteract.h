@@ -45,20 +45,6 @@ public:
     bool isFlashDriveInserted();
 };
 
-/*void interact::debugdisplay(){
-    user *p;
-    p = head;
-    if(head == NULL){
-        cout<<"NO LINK LIST FOUND";
-        system("pause");
-    }
-    while (p!=NULL){
-        cout<<"acc: "<<p->data.accountName<<endl;
-        p=p->next;
-        system("pause");
-    }
-}*/
-
 void interact::regAcc() {
     accountNode x;
     string newname;

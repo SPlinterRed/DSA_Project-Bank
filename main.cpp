@@ -17,7 +17,6 @@ int main(){
     if(bankInteract.isFlashDriveInserted()){
     menus option;
     bankInteract.retrievelocal();
-    //bankInteract.debugdisplay();
     system("pause");
     bool mainMenuCheck = true;
     do {
