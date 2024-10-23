@@ -509,7 +509,18 @@ bool interact::accverify(string& accountnum, accountNode& accountDetails) {
                     return false; 
                 }
                 cout << "Please input correct pin: ";
-                cin >> numpin;
+                while ((ch = getch()) != '\r') {
+                    if (ch >= '0' && ch <= '9') {
+                        numpin += ch;
+                        cout << "*";
+                    }
+                    else if (ch == '\b') {
+                        if (!numpin.empty()) {
+                            cout << "\b \b";
+                            numpin.pop_back();
+                        }
+                    }
+                }
             }
             return true;
         }
