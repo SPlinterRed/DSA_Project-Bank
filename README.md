@@ -1,6 +1,6 @@
 
 # DSA_Project-Bank
-IBM - Integrated bank of Maniago
+IBM - International Bank of Maniago
 
 **Group Members:**
 > <a href="https://www.facebook.com/axelaaron.arceleta/" target="_blank"> Arceleta, Axel Aaron </a>  <br>
