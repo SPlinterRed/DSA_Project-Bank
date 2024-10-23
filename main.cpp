@@ -11,10 +11,11 @@ public:
     int bankMenu();
     int atmMenu();
 };
+interact bankInteract;
 
 int main(){
+    if(bankInteract.isFlashDriveInserted()){
     menus option;
-    interact bankInteract;
     bankInteract.retrievelocal();
     //bankInteract.debugdisplay();
     system("pause");
@@ -94,6 +95,9 @@ int main(){
                 cout << "No such options"; break;
         }
     }while(mainMenuCheck);
+    return 0;
+}
+cout<<"PLEASE INSERT FLASHDRIVE";
     return 0;
 }
     
