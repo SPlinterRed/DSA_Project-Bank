@@ -14,7 +14,7 @@ public:
 interact bankInteract;
 
 int main(){
-    if(bankInteract.isFlashDriveInserted()){
+    //if(bankInteract.isFlashDriveInserted()){
     menus option;
     bankInteract.retrievelocal();
     //bankInteract.debugdisplay();
@@ -45,7 +45,7 @@ int main(){
                 }
                 break;
             case 2:
-                do {
+                /*do {
                     system("cls");
                     cout << "Please insert USB / FLASHDRIVE";
                     for (int i = 0; i < 3; ++i) {
@@ -53,6 +53,7 @@ int main(){
                         cout << ".";
                     }
                 } while (!bankInteract.checkFlashDrive());
+                */
                 while (menuCheck) {
                     switch (option.atmMenu()) {
                         case 1:  
@@ -97,9 +98,9 @@ int main(){
     }while(mainMenuCheck);
     return 0;
 }
-cout<<"PLEASE INSERT FLASHDRIVE";
-    return 0;
-}
+//cout<<"PLEASE INSERT FLASHDRIVE";
+ //   return 0;
+//}
     
     
 

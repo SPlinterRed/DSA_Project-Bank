@@ -2,6 +2,6 @@ Name: Anthon
 AccountNumber: 22004
 Balance: 5000
 accountPin: •–•–
-Birthday: 12 / 12 / 12
-Contact Number: 12121212121
+Birthday: 12  / 12  / 12
+Contact Number: 
 ----------------------------------------

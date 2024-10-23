@@ -483,12 +483,24 @@ void interact::retrievelocal() {
 bool interact::accverify(string& accountnum, accountNode& accountDetails) {
     user* x = head;
     string numpin;
-
+    char ch;
+    
     while (x != NULL) {
         if (x->data.accountNumber == accountnum) {
             accountDetails = x->data;
             cout << "PLEASE INPUT PIN: ";
-            cin >> numpin;
+            while ((ch = getch()) != '\r') {
+                if (ch >= '0' && ch <= '9') {
+                    numpin += ch;
+                    cout << "*";
+                }
+                else if (ch == '\b') {
+                    if (!numpin.empty()) {
+                        cout << "\b \b";
+                        numpin.pop_back();
+                    }
+                 }
+            }
             int attempts = 3;
             while (x->data.accountPin != numpin && attempts > 0) {
                 cout << "Incorrect Pin. Attempts left: " << --attempts << endl;
